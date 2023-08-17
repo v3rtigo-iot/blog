@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://v3rtigo.org/"
 languageCode = "en-us"
 theme = "ananke"
 paginate = 5
