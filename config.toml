@@ -1,41 +1,72 @@
-title = "Notre-Dame de Paris"
-baseURL = "https://gohugo-theme-ananke.pages.dev"
+baseurl = "/"
 languageCode = "en-us"
-theme = ["github.com/theNewDynamic/gohugo-theme-ananke"]
-resourceDir = "../resources"
+theme = "ananke"
+paginate = 5
 
-DefaultContentLanguage = "en"
-SectionPagesMenu = "main"
-Paginate = 3 # this is set low for demonstrating with dummy content. Set to a higher number
-googleAnalytics = ""
-enableRobotsTXT = true
+[params]
+  # dir name of your main content (default is `content/posts`).
+  # the list of set content will show up on your index page (baseurl).
+  contentTypeName = "posts"
+
+  # ["orange", "blue", "red", "green", "pink"]
+  themeColor = "orange"
+
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems = 2
+
+  # show selector to switch language
+  showLanguageSelector = false
+
+  # set theme to full screen width
+  fullWidthTheme = false
+
+  # center theme with default width
+  centerTheme = false
+
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
+
+  # set post to show the last updated
+  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
+  showLastUpdated = false
+  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
+  # updatedDatePrefix = "Updated"
+
+  # set all headings to their default size (depending on browser settings)
+  # it's set to `true` by default
+  # oneHeadingSize = false
+
+[params.twitter]
+  # set Twitter handles for Twitter cards
+  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
+  # do not include @
+  creator = ""
+  site = ""
 
 [languages]
   [languages.en]
-    title = "Ananke"
-    weight = 1
-    contentDir = "content/en"
-    # languageDirection = 'rtl' for Right-To-Left languages
-  [languages.fr]
-    title = "Ananke Fr"
-    weight = 2
-    contentDir = "content/fr"
+    languageName = "English"
+    title = "Terminal"
+    subtitle = "A simple, retro theme for Hugo"
+    owner = ""
+    keywords = ""
+    copyright = ""
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+    missingContentMessage = "Page not found..."
+    missingBackButtonLabel = "Back to home page"
 
-[sitemap]
-  changefreq = "monthly"
-  priority = 0.5
-  filename = "sitemap.xml"
+    [languages.en.params.logo]
+      logoText = "Terminal"
+      logoHomeLink = "/"
 
-[params]
-  text_color = ""
-  author = ""
-  favicon = ""
-  site_logo = ""
-  description = "The last theme you'll ever need. Maybe."
-  # choose a background color from any on this page: https://tachyons.io/docs/themes/skins/ and preface it with "bg-"
-  background_color_class = "bg-black"
-  recent_posts_number = 3
-
-[[params.ananke_socials]]
-name = "twitter"
-url = "https://twitter.com/GoHugoIO"
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.en.menu.main]]
+        identifier = "showcase"
+        name = "Showcase"
+        url = "/showcase"
