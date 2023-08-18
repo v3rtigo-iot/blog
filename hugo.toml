@@ -2,3 +2,16 @@ baseURL = 'https://v3rtigo.org'
 languageCode = 'en-us'
 title = 'Adventures in IoT'
 theme = 'terminal'
+[params]
+	Logo.logoText = "Adventures in IoT"
+# ["orange", "blue", "red", "green", "pink"]
+    themeColor = "green"
+# set theme to full screen width
+    fullWidthTheme = false
+
+# center theme with default width
+    centerTheme = true
+
+
+# show selector to switch language - NOT WORKING
+    showLanguageSelector = "true"
