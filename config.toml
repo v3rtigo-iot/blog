@@ -1,6 +1,6 @@
 baseurl = "https://v3rtigo.org/"
 languageCode = "en-us"
-theme = "ananke"
+theme = "Terminal"
 paginate = 5
 
 [params]
