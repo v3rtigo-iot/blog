@@ -13,7 +13,7 @@ paginate = 5
 
 [languages]
   [languages.en]
-    title = "Terminal"
+    title = "Adventures in IoT"
     subtitle = "A simple, retro theme for Hugo"
 =======
 baseurl = "https://v3rtigo.org/"
@@ -64,7 +64,7 @@ paginate = 5
 [languages]
   [languages.en]
     languageName = "English"
-    title = "Terminal"
+    title = "Adventures in IoT"
     subtitle = "A simple, retro theme for Hugo"
     owner = ""
 >>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
@@ -80,7 +80,7 @@ paginate = 5
 >>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
 
     [languages.en.params.logo]
-      logoText = "Terminal"
+      logoText = "Adventures in IoT"
       logoHomeLink = "/"
 
     [languages.en.menu]
