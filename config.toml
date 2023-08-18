@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 baseurl = "https://example.com/"
 languageCode = "en-us"
 theme = "hugo-theme-terminal"
@@ -14,11 +15,69 @@ paginate = 5
   [languages.en]
     title = "Terminal"
     subtitle = "A simple, retro theme for Hugo"
+=======
+baseurl = "https://v3rtigo.org/"
+languageCode = "en-us"
+theme = "Terminal"
+paginate = 5
+
+[params]
+  # dir name of your main content (default is `content/posts`).
+  # the list of set content will show up on your index page (baseurl).
+  contentTypeName = "posts"
+
+  # ["orange", "blue", "red", "green", "pink"]
+  themeColor = "orange"
+
+  # if you set this to 0, only submenu trigger will be visible
+  showMenuItems = 2
+
+  # show selector to switch language
+  showLanguageSelector = false
+
+  # set theme to full screen width
+  fullWidthTheme = false
+
+  # center theme with default width
+  centerTheme = false
+
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
+
+  # set post to show the last updated
+  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
+  showLastUpdated = false
+  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
+  # updatedDatePrefix = "Updated"
+
+  # set all headings to their default size (depending on browser settings)
+  # it's set to `true` by default
+  # oneHeadingSize = false
+
+[params.twitter]
+  # set Twitter handles for Twitter cards
+  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
+  # do not include @
+  creator = ""
+  site = ""
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    title = "Terminal"
+    subtitle = "A simple, retro theme for Hugo"
+    owner = ""
+>>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
     keywords = ""
     copyright = ""
     menuMore = "Show more"
     readMore = "Read more"
     readOtherPosts = "Read other posts"
+<<<<<<< HEAD
+=======
+    missingContentMessage = "Page not found..."
+    missingBackButtonLabel = "Back to home page"
+>>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
 
     [languages.en.params.logo]
       logoText = "Terminal"
