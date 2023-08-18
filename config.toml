@@ -1,24 +1,8 @@
-<<<<<<< HEAD
-baseurl = "https://example.com/"
+baseurl = "/"
 languageCode = "en-us"
-theme = "hugo-theme-terminal"
-paginate = 5
-
-[params]
-  contentTypeName = "posts"
-  themeColor = "orange"
-  showMenuItems = 2
-  fullWidthTheme = false
-  centerTheme = false
-
-[languages]
-  [languages.en]
-    title = "Adventures in IoT"
-    subtitle = "A simple, retro theme for Hugo"
-=======
-baseurl = "https://v3rtigo.org/"
-languageCode = "en-us"
-theme = "Terminal"
+# Add it only if you keep the theme in the `themes` directory.
+# Remove it if you use the theme as a remote Hugo Module.
+theme = "terminal"
 paginate = 5
 
 [params]
@@ -41,18 +25,35 @@ paginate = 5
   # center theme with default width
   centerTheme = false
 
-  # set a custom favicon (default is a `themeColor` square)
-  # favicon = "favicon.ico"
+  # if your resource directory contains an image called `cover.(jpg|png|webp)`,
+  # then the file will be used as a cover automatically.
+  # With this option you don't have to put the `cover` param in a front-matter.
+  autoCover = true
 
   # set post to show the last updated
   # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
   showLastUpdated = false
+
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
+
   # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
   # updatedDatePrefix = "Updated"
 
   # set all headings to their default size (depending on browser settings)
-  # it's set to `true` by default
-  # oneHeadingSize = false
+  # oneHeadingSize = true # default
+
+  # whether to show a page's estimated reading time
+  # readingTime = false # default
+
+  # whether to show a table of contents
+  # can be overridden in a page's front-matter
+  # Toc = false # default
+
+  # set title for the table of contents
+  # can be overridden in a page's front-matter
+  # TocTitle = "Table of Contents" # default
+
 
 [params.twitter]
   # set Twitter handles for Twitter cards
@@ -64,23 +65,23 @@ paginate = 5
 [languages]
   [languages.en]
     languageName = "English"
-    title = "Adventures in IoT"
+    title = "Terminal"
     subtitle = "A simple, retro theme for Hugo"
     owner = ""
->>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
     keywords = ""
     copyright = ""
     menuMore = "Show more"
     readMore = "Read more"
     readOtherPosts = "Read other posts"
-<<<<<<< HEAD
-=======
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
     missingContentMessage = "Page not found..."
     missingBackButtonLabel = "Back to home page"
->>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
+    minuteReadingTime = "min read"
+    words = "words"
 
     [languages.en.params.logo]
-      logoText = "Adventures in IoT"
+      logoText = "Terminal"
       logoHomeLink = "/"
 
     [languages.en.menu]
@@ -92,3 +93,11 @@ paginate = 5
         identifier = "showcase"
         name = "Showcase"
         url = "/showcase"
+
+[module]
+  # In case you would like to make changes to the theme and keep it locally in you repository,
+  # uncomment the line below (and correct the local path if necessary).
+  # --
+  # replacements = "github.com/panr/hugo-theme-terminal -> themes/terminal"
+[[module.imports]]
+  path = 'github.com/panr/hugo-theme-terminal'
