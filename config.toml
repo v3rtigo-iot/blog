@@ -13,7 +13,7 @@ paginate = 5
 
 [languages]
   [languages.en]
-    title = "V3rtigo"
+    title = "Terminal"
     subtitle = "A simple, retro theme for Hugo"
 =======
 baseurl = "https://v3rtigo.org/"
@@ -80,7 +80,7 @@ paginate = 5
 >>>>>>> e7acc6c0349bfbef417a4d75b04776dd022c61b2
 
     [languages.en.params.logo]
-      logoText = "Terminal"
+      logoText = "V3rtigo"
       logoHomeLink = "/"
 
     [languages.en.menu]
