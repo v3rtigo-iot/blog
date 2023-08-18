@@ -13,7 +13,7 @@ paginate = 5
 
 [languages]
   [languages.en]
-    title = "Terminal"
+    title = "V3rtigo"
     subtitle = "A simple, retro theme for Hugo"
 =======
 baseurl = "https://v3rtigo.org/"
