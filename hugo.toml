@@ -12,13 +12,15 @@ theme = 'terminal'
 # center theme with default width
     centerTheme = true
 
+# if you set this to 0, only submenu trigger will be visible
+    showMenuItems = 4
+
 [languages]
   [languages.en]
-    languageName = "English"
     title = "Adventures in IoT"
     owner = "v3rtigo"
     keywords = ""
-    copyright = "v3rtigo"
+    copyright = "v3rtigo 2023"
     menuMore = "Show more"
     readMore = ""
     readOtherPosts = "Read other posts"
@@ -27,6 +29,27 @@ theme = 'terminal'
     missingContentMessage = "Bruh..."
     missingBackButtonLabel = "Why are you here?"
     words = "words"
+
+  [languages.en.menu]
+    [[languages.en.menu.main]]
+      identifier = "Hacking Trash"
+      name = "Hacking Trash"
+      url = "/hacking-trash"    
+    [[languages.en.menu.main]]
+      identifier = "Resources"
+      name = "Resources"
+      url = "/resources"
+    [[languages.en.menu.main]]
+      identifier = "about"
+      name = "About"
+      url = "/about"
+    [[languages.en.menu.main]]
+      identifier = "News"
+      name = "News"
+      url = "/news"
+
+
+
 
 
 # show selector to switch language - NOT WORKING
