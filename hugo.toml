@@ -12,6 +12,22 @@ theme = 'terminal'
 # center theme with default width
     centerTheme = true
 
+[languages]
+  [languages.en]
+    languageName = "English"
+    title = "Adventures in IoT"
+    owner = "v3rtigo"
+    keywords = ""
+    copyright = "v3rtigo"
+    menuMore = "Show more"
+    readMore = ""
+    readOtherPosts = "Read other posts"
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
+    missingContentMessage = "Bruh..."
+    missingBackButtonLabel = "Why are you here?"
+    words = "words"
+
 
 # show selector to switch language - NOT WORKING
-    showLanguageSelector = "true"
+    showLanguageSelector = true
