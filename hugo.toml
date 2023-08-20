@@ -1,6 +1,7 @@
 title = 'Adventures in IoT'
 theme = 'terminal'
 baseURL = 'https://v3rtigo.org'
+copyright = "© v3rtigo 2023"
 
 [languages]
   [languages.en]
@@ -10,7 +11,6 @@ baseURL = 'https://v3rtigo.org'
     title = "Adventures in IoT"
     owner = "v3rtigo"
     keywords = ""
-    copyright = "© v3rtigo 2023"
     menuMore = "Show more"
     readMore = ""
     readOtherPosts = "Read other posts"
