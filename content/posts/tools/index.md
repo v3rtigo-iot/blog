@@ -46,29 +46,40 @@ Now that we have an idea of what we'll need, let's describe at a high level what
 A multimeter is an invaluable tool for anyone working with electronics or electrical systems. It can measure several different aspects related to electricity, such as voltage, current, resistance, and sometimes other quantities like capacitance and temperature. In general, the multimeter will be the first tool we use to identify, specifically, **ground** and **voltage**. 
 
 ***Soldering Iron***
+A hand tool with a heated metal tip used to melt solder, a fusible metal alloy that creates a permanent bond between metal workpieces. In hardware hacking, a soldering iron is vital for attaching and detaching components on printed circuit boards (PCBs). It allows for precise control and enables us to modify, repair, or create custom hardware configurations.
 
 ***Logic Analyzer***
+Another invaluable tool for understanding the complex interactions between different parts of a digital circuit. By capturing data across multiple channels, it aids in the debugging and reverse engineering of hardware, helping to trace communication and uncover hidden functionalities. Unlike an oscilloscope, which displays voltage against time, a logic analyzer displays timing diagrams of digital signals and can simultaneously analyze many digital signals.
 
 ***Serial Adapter Cable***
+These are cables specifically designed to interface with devices operating at respective voltage levels. They're essential for connecting microcontrollers, sensors, and other embedded devices to computers. The correct voltage ensures compatibility and prevents damage. They are crucial for reading, writing, and analyzing data directly from the hardware.
 
 ***SOIC Clips***
+These clips connect to Small Outline Integrated Circuit (SOIC) packages without needing to solder. They come in different pin configurations. In hardware hacking, being able to quickly and temporarily connect to chips is essential. These clips enable us to read or reprogram memory chips or microcontrollers without permanent alteration, aiding in reverse engineering or modification.
 
 ***Silicone Soldering Mat***
+Made of heat-resistant silicone, these mats provide a safe surface for soldering and handling hot components. Besides protecting the work surface from heat and burns, the mats often feature built-in compartments and magnetic areas for organizing screws and small parts, thus preventing loss and enhancing efficiency.
 
 ***Helping Hands***
+A tool equipped with adjustable arms with clips and sometimes a magnifying glass. Holding tiny components steady during soldering or inspection can be challenging and helping Handm assits by hold things firmly in place, allowing for more precise and controlled work.
 
 ***Screwdrivers/Pliers***
+While this may appear obvious, Having various screwdrivers is paramount for opening up electronic devices to access internal components. Specialized types, like **Torx** or **pentalobe**, may be required to open certain proprietary hardware. Similar to screwdrivers, **pliers** serve multiple functions in hardware hacking, including handling, shaping, or cutting wires, and even holding hot components during soldering.
 
 ***Dupont Wire***
+Flexible jumper wires fitted with Dupont connectors, usually used for breadboard connections. They enable quick and temporary connections between different components, allowing for experimentation without soldering. These wires come in various forms such as male-to-male or male-to-female. It hardware hacking we'll most often use these for connecting to **pin headers**.
 
 ***USB Hub***
+We'll often be working with multiple devices simultaneously, a USB Hub facilitates the connection and control of multiple targets, such as various microcontrollers or debuggers.
 
 ***Breadboards***
+A rectangular board with a grid of holes, used for creating temporary electronic circuits without soldering. Ideal for experimenting, testing ideas, and building prototypes. Components can be easily inserted, rearranged, or removed, making it a flexible platform for testing and analysis.
 
 ***Jumper Wires***
+Insulated wires used to connect components on a breadboard. They provide an easy way to route signals and power around a breadboard, allowing for quick changes and iterations on a circuit design.  I've often found these useful for quick solder work when temporary pins are needed for debugging.
 
 ***Fan (Soldering Ventilation)***
-
+A specialized fan used to draw away the fumes produced during soldering. Soldering can produce toxic fumes from the flux and other materials. A soldering fan removes these fumes from the working area.  
 
 
 ## Work In Progress
