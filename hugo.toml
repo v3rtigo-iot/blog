@@ -1,5 +1,6 @@
 title = 'Adventures in IoT'
 theme = 'terminal'
+baseURL = 'https://v3rtigo.org'
 
 [languages]
   [languages.en]
