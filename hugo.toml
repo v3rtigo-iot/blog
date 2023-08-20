@@ -1,22 +1,11 @@
-baseURL = 'https://v3rtigo.org'
-languageCode = 'en-us'
 title = 'Adventures in IoT'
 theme = 'terminal'
-[params]
-	Logo.logoText = "Adventures in IoT"
-# ["orange", "blue", "red", "green", "pink"]
-    themeColor = "green"
-# set theme to full screen width
-    fullWidthTheme = false
-
-# center theme with default width
-    centerTheme = true
-
-# if you set this to 0, only submenu trigger will be visible
-    showMenuItems = 4
 
 [languages]
   [languages.en]
+    [languages.en.params]
+    baseURL = 'https://v3rtigo.org'
+    languageCode = 'en-us'
     title = "Adventures in IoT"
     owner = "v3rtigo"
     keywords = ""
@@ -28,7 +17,14 @@ theme = 'terminal'
     olderPosts = "Older posts"
     missingContentMessage = "Bruh..."
     missingBackButtonLabel = "Why are you here?"
-    words = "words"
+    centerTheme = true
+    Logo.logoText = "Adventures in IoT"
+# ["orange", "blue", "red", "green", "pink"]
+    themeColor = "green"
+# set theme to full screen width
+    fullWidthTheme = false
+# if you set this to 0, only submenu trigger will be visible
+    showMenuItems = 4
 
   [languages.en.menu]
     [[languages.en.menu.main]]

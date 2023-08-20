@@ -7,3 +7,6 @@ description = "Let's look at the tools of the trade from the essentials to quali
 +++
 
 We'll begin our journey with a look at essential tools needed to begin basic analysis of IoT devices. Once we've discussed the basics, we'll move into those that add to quality of life and finally tools for more advanced hardware analysis.
+
+This is by no means an exhaustive list nor are these in a strict order of importance.  That said, all the tools in this initial group are arguably all necessary for the basic analysis deep dives we'll do as the blog progresses. 
+
