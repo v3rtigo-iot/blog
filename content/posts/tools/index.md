@@ -80,6 +80,13 @@ Insulated wires used to connect components on a breadboard. They provide an easy
 
 ***Fan (Soldering Ventilation)***
 A specialized fan used to draw away the fumes produced during soldering. Soldering can produce toxic fumes from the flux and other materials. A soldering fan removes these fumes from the working area.  
+>
+***Oscilloscope*** An oscilloscope is an electronic test instrument that graphically displays varying signal voltages as a two-dimensional plot of one or more signals as a function of time. It can reveal detailed information about the frequency, amplitude, waveform shape, and potential errors or noise within a signal.
 
+***Variable Power Supply*** A variable power supply is a device that can provide a range of voltage and current levels, adjustable by the user. It's commonly used to provide controlled power to various electronic components, circuits, and systems.
 
-## Work In Progress
+ ***Serial Debug*** You're going to come across many of these "gadgets" that allow for easy of interfacing with things like **JTAG**, **SPI**, **UART**, **I2C**. They will have a range of functionality that we'll dive deeper into in later posts.  At a high level these tools allow for communication protcol analysis, hardware reverse engineering, debugging, discovery of unknown interfaces, bypassing protections, and just an overall flexible and powerful means of interacting with devices.  Below I'll list a handful that I commonly use with their description and again, we'll cover this in far more depth down the road.
+ 
+ - **[Jtagulator](http://www.grandideastudio.com/jtagulator)** An open-source hardware tool that assists in identifying OCD (On-Chip Debugging) interfaces from test points, vias, or component pads on a circuit board. It's used for JTAG pinout discovery (and others) and hardware debugging.
+ - **[Attify Badge](https://blog.attify.com/hack-iot-device)** Provides a variety of interfaces and features in a compact, wearable badge format. It includes connections for protocols like UART, SPI, I2C, JTAG, and more. Some versions may also feature buttons, switches, and LEDs to facilitate interaction with the connected devices.
+ - **[Bus Pirate](http://dangerousprototypes.com/docs/Bus_Pirate)** A universal bus interface that talks to most chips and can communicate with several protocols including SPI, I2C, UART, and more.
