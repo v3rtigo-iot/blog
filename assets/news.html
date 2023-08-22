@@ -1,0 +1,9 @@
+{{ with resources.GetRemote "https://hugomods.com/en/index.xml" | transform.Unmarshal }}
+  <ul>
+    {{ range .channel.item }}
+    <li>
+      <a href="{{ .link }}">{{ .title }}</a>
+    </li>
+    {{ end }}
+  </ul>
+{{ end }}

@@ -1,0 +1,9 @@
+{{ with resources.GetRemote "http://fetchrss.com/rss/64e4df4c1d1a1f24660d589264e4e40eb411e4701e1b2112.xml" | transform.Unmarshal }}
+  <ul>
+    {{ range .channel.item }}
+    <li>
+      <a href="{{ .link }}">{{ .title }}</a>
+    </li>
+    {{ end }}
+  </ul>
+{{ end }}
