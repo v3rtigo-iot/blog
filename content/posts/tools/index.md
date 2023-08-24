@@ -90,3 +90,4 @@ A specialized fan used to draw away the fumes produced during soldering. Solderi
  - **[Jtagulator](http://www.grandideastudio.com/jtagulator)** An open-source hardware tool that assists in identifying OCD (On-Chip Debugging) interfaces from test points, vias, or component pads on a circuit board. It's used for JTAG pinout discovery (and others) and hardware debugging.
  - **[Attify Badge](https://blog.attify.com/hack-iot-device)** Provides a variety of interfaces and features in a compact, wearable badge format. It includes connections for protocols like UART, SPI, I2C, JTAG, and more. Some versions may also feature buttons, switches, and LEDs to facilitate interaction with the connected devices.
  - **[Bus Pirate](http://dangerousprototypes.com/docs/Bus_Pirate)** A universal bus interface that talks to most chips and can communicate with several protocols including SPI, I2C, UART, and more.
+
