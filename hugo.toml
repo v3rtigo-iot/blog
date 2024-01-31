@@ -1,7 +1,7 @@
 title = 'Adventures in IoT'
 theme = 'terminal'
 baseURL = 'https://v3rtigo.org'
-copyright = "© v3rtigo 2023"
+copyright = "© v3rtigo 2024"
 
 [languages]
   [languages.en]
