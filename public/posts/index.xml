@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Adventures in IoT</title>
+    <link>https://v3rtigo.org/posts/</link>
+    <description>Recent content in Posts on Adventures in IoT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© v3rtigo 2023</copyright>
+    <lastBuildDate>Sat, 19 Aug 2023 13:02:57 -0700</lastBuildDate><atom:link href="https://v3rtigo.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tools of The Trade</title>
+      <link>https://v3rtigo.org/posts/tools/</link>
+      <pubDate>Sat, 19 Aug 2023 13:02:57 -0700</pubDate>
+      
+      <guid>https://v3rtigo.org/posts/tools/</guid>
+      <description>We&amp;rsquo;ll begin our journey with a look at essential tools needed to begin basic analysis of IoT devices. Once we&amp;rsquo;ve discussed the basics, we&amp;rsquo;ll move into those that add to quality of life and finally tools for more advanced hardware analysis.
+This is by no means an exhaustive list nor are these in a strict order of importance. That said, all the tools in this initial group are arguably all necessary for the basic analysis deep dives we&amp;rsquo;ll do as the blog progresses.</description>
+      <content>&lt;p&gt;We&amp;rsquo;ll begin our journey with a look at essential tools needed to begin basic analysis of IoT devices. Once we&amp;rsquo;ve discussed the basics, we&amp;rsquo;ll move into those that add to quality of life and finally tools for more advanced hardware analysis.&lt;/p&gt;
+&lt;p&gt;This is by no means an exhaustive list nor are these in a strict order of importance.  That said, all the tools in this initial group are arguably all necessary for the basic analysis deep dives we&amp;rsquo;ll do as the blog progresses.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s worth noting that you don&amp;rsquo;t need the exact same brand of tools.  As far as cost, while I didn&amp;rsquo;t purchases the cheapest of everything, I tried to keep costs reasonable as things can add up fast.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;The Basics&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;What do I have?&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;Important?&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Multimeter&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;AstroAI Digital Multimeter&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Soldering Iron&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Hakko FX888D-23BY&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Logic Analyzer&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DreamSourceLab DSLogic Plus&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Serial 5V Adapter Cable&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DTech FTDI USB to TTL&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Serial 3.3v Adapter Cable&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DTech FTDI USB to TTL&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SOIC Clips 8 pin&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;5250 - IC Test Clip&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SOIC Clips 16 pin&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ACEIRMC SOP16 IC Test Clip&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Silicone Soldering Mat&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Kaisi Heat Insulation Silicone Mat&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;IDEAL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Helping Hands&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;QuadHands Workbench&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;IDEAL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Screwdrivers&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;STREBITO Screwdriver Sets 142-Piece&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pliers&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;WORKPRO 6-piece Mini Pliers Set&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dupont Wire&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ELEGOO 120pcs Multicolored&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;USB Hub&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Apanage Powered USB 3.0 Hub, 11 Ports&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;IDEAL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Breadboards&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;4PCS Breadboards kit w/wires&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;IDEAL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Jumper Wires (for breadboard)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;AUSTOR 560 Pieces Jumper Wire Kit&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;IDEAL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Fan (Soldering Ventilation)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;KOTTO Solder Smoke Absorber&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Advanced&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;What do I have?&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;Important?&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Oscilloscope&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Rigol DS1054Z Digital Oscilloscope&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Variable Power Supply&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;KORAD KD3005D&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JTAG/Serial Debug&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Jtagulator&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;YES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&#34;so-what-is-all-this-stuff&#34;&gt;So what is all this stuff?&lt;/h1&gt;
+&lt;p&gt;Now that we have an idea of what we&amp;rsquo;ll need, let&amp;rsquo;s describe at a high level what they are and what they do.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Safety Considerations: It’s vital to follow proper safety guidelines, such as using the correct range and terminal for any measurement being taken. Improper use can lead to damage to the tool or even injury.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Multimeter&lt;/strong&gt;&lt;/em&gt;
+A multimeter is an invaluable tool for anyone working with electronics or electrical systems. It can measure several different aspects related to electricity, such as voltage, current, resistance, and sometimes other quantities like capacitance and temperature. In general, the multimeter will be the first tool we use to identify, specifically, &lt;strong&gt;ground&lt;/strong&gt; and &lt;strong&gt;voltage&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Soldering Iron&lt;/strong&gt;&lt;/em&gt;
+A hand tool with a heated metal tip used to melt solder, a fusible metal alloy that creates a permanent bond between metal workpieces. In hardware hacking, a soldering iron is vital for attaching and detaching components on printed circuit boards (PCBs). It allows for precise control and enables us to modify, repair, or create custom hardware configurations.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Logic Analyzer&lt;/strong&gt;&lt;/em&gt;
+Another invaluable tool for understanding the complex interactions between different parts of a digital circuit. By capturing data across multiple channels, it aids in the debugging and reverse engineering of hardware, helping to trace communication and uncover hidden functionalities. Unlike an oscilloscope, which displays voltage against time, a logic analyzer displays timing diagrams of digital signals and can simultaneously analyze many digital signals.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Serial Adapter Cable&lt;/strong&gt;&lt;/em&gt;
+These are cables specifically designed to interface with devices operating at respective voltage levels. They&amp;rsquo;re essential for connecting microcontrollers, sensors, and other embedded devices to computers. The correct voltage ensures compatibility and prevents damage. They are crucial for reading, writing, and analyzing data directly from the hardware.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;SOIC Clips&lt;/strong&gt;&lt;/em&gt;
+These clips connect to Small Outline Integrated Circuit (SOIC) packages without needing to solder. They come in different pin configurations. In hardware hacking, being able to quickly and temporarily connect to chips is essential. These clips enable us to read or reprogram memory chips or microcontrollers without permanent alteration, aiding in reverse engineering or modification.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Silicone Soldering Mat&lt;/strong&gt;&lt;/em&gt;
+Made of heat-resistant silicone, these mats provide a safe surface for soldering and handling hot components. Besides protecting the work surface from heat and burns, the mats often feature built-in compartments and magnetic areas for organizing screws and small parts, thus preventing loss and enhancing efficiency.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Helping Hands&lt;/strong&gt;&lt;/em&gt;
+A tool equipped with adjustable arms with clips and sometimes a magnifying glass. Holding tiny components steady during soldering or inspection can be challenging and helping Hands assits by hold things firmly in place, allowing for more precise and controlled work.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Screwdrivers/Pliers&lt;/strong&gt;&lt;/em&gt;
+While this may appear obvious, Having various screwdrivers is paramount for opening up electronic devices to access internal components. Specialized types, like &lt;strong&gt;Torx&lt;/strong&gt; or &lt;strong&gt;pentalobe&lt;/strong&gt;, may be required to open certain proprietary hardware. Similar to screwdrivers, &lt;strong&gt;pliers&lt;/strong&gt; serve multiple functions in hardware hacking, including handling, shaping, or cutting wires, and even holding hot components during soldering.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Dupont Wire&lt;/strong&gt;&lt;/em&gt;
+Flexible jumper wires fitted with Dupont connectors, usually used for breadboard connections. They enable quick and temporary connections between different components, allowing for experimentation without soldering. These wires come in various forms such as male-to-male or male-to-female. It hardware hacking we&amp;rsquo;ll most often use these for connecting to &lt;strong&gt;pin headers&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;USB Hub&lt;/strong&gt;&lt;/em&gt;
+We&amp;rsquo;ll often be working with multiple devices simultaneously, a USB Hub facilitates the connection and control of multiple targets, such as various microcontrollers or debuggers.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Breadboards&lt;/strong&gt;&lt;/em&gt;
+A rectangular board with a grid of holes, used for creating temporary electronic circuits without soldering. Ideal for experimenting, testing ideas, and building prototypes. Components can be easily inserted, rearranged, or removed, making it a flexible platform for testing and analysis.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Jumper Wires&lt;/strong&gt;&lt;/em&gt;
+Insulated wires used to connect components on a breadboard. They provide an easy way to route signals and power around a breadboard, allowing for quick changes and iterations on a circuit design.  I&amp;rsquo;ve often found these useful for quick solder work when temporary pins are needed for debugging.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Fan (Soldering Ventilation)&lt;/strong&gt;&lt;/em&gt;
+A specialized fan used to draw away the fumes produced during soldering. Soldering can produce toxic fumes from the flux and other materials. A soldering fan removes these fumes from the working area.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Oscilloscope&lt;/strong&gt;&lt;/em&gt; An oscilloscope is an electronic test instrument that graphically displays varying signal voltages as a two-dimensional plot of one or more signals as a function of time. It can reveal detailed information about the frequency, amplitude, waveform shape, and potential errors or noise within a signal.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Variable Power Supply&lt;/strong&gt;&lt;/em&gt; A variable power supply is a device that can provide a range of voltage and current levels, adjustable by the user. It&amp;rsquo;s commonly used to provide controlled power to various electronic components, circuits, and systems.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Serial Debug&lt;/strong&gt;&lt;/em&gt; You&amp;rsquo;re going to come across many of these &amp;ldquo;gadgets&amp;rdquo; that allow for ease of interfacing with things like &lt;strong&gt;JTAG&lt;/strong&gt;, &lt;strong&gt;SPI&lt;/strong&gt;, &lt;strong&gt;UART&lt;/strong&gt;, &lt;strong&gt;I2C&lt;/strong&gt;. They will have a range of functionality that we&amp;rsquo;ll dive deeper into in later posts.  At a high level these tools allow for communication protcol analysis, hardware reverse engineering, debugging, discovery of unknown interfaces, bypassing protections, and just an overall flexible and powerful means of interacting with devices.  Below I&amp;rsquo;ll list a handful that I commonly use with their description and again, we&amp;rsquo;ll cover this in far more depth down the road.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://www.grandideastudio.com/jtagulator&#34;&gt;Jtagulator&lt;/a&gt;&lt;/strong&gt; An open-source hardware tool that assists in identifying OCD (On-Chip Debugging) interfaces from test points, vias, or component pads on a circuit board. It&amp;rsquo;s used for JTAG pinout discovery (and others) and hardware debugging.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://blog.attify.com/hack-iot-device&#34;&gt;Attify Badge&lt;/a&gt;&lt;/strong&gt; Provides a variety of interfaces and features in a compact, wearable badge format. It includes connections for protocols like UART, SPI, I2C, JTAG, and more. Some versions may also feature buttons, switches, and LEDs to facilitate interaction with the connected devices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://dangerousprototypes.com/docs/Bus_Pirate&#34;&gt;Bus Pirate&lt;/a&gt;&lt;/strong&gt; A universal bus interface that talks to most chips and can communicate with several protocols including SPI, I2C, UART, and more.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>The Adventure Begins</title>
+      <link>https://v3rtigo.org/posts/the-adventure-begins/</link>
+      <pubDate>Thu, 17 Aug 2023 15:07:11 -0700</pubDate>
+      
+      <guid>https://v3rtigo.org/posts/the-adventure-begins/</guid>
+      <description>Hello there! I&amp;rsquo;m Nathan. To foster discourse, collaboration and ensure I take good notes for myself, I&amp;rsquo;ve created blog to document the journey into the world of IoT/Hardware hacking. It&amp;rsquo;s super exciting to share this content and have you all along as we go through the trials and tribulations of learning a complex topic. Join me as we hack some hardware and dive into interesting vulnerabilities and realities of the hardware we all use every day and that continues to become more prolific.</description>
+      <content>&lt;p&gt;Hello there! I&amp;rsquo;m Nathan. To foster discourse, collaboration and ensure I take good notes for myself, I&amp;rsquo;ve created blog to document the journey into the world of IoT/Hardware hacking. It&amp;rsquo;s super exciting to share this content and have you all along as we go through the trials and tribulations of learning a complex topic. Join me as we hack some hardware and dive into interesting vulnerabilities and realities of the hardware we all use every day and that continues to become more prolific.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s a very important point I&amp;rsquo;d like to mention.  The learning curve will hit hard.  Taking our time and establishing a solid foundation is critical to continuing the journey in such a way that we are effectively learning and not just wasting time.  This field is multifaceted and will require depth of knowledge in many realms. E.g., hacking, linux, soldering, electrical engineering, reverse engineering, radio communications and so much more even within those disicplines.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s jump right in and start exploring.  If you ever have thoughts, questions, or suggestions, I&amp;rsquo;m here with an open mind.  Let&amp;rsquo;s get hacking.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

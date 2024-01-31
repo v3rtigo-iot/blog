@@ -3,9 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://v3rtigo.org/</loc>
+    <lastmod>2023-08-19T13:02:57-07:00</lastmod>
+  </url><url>
+    <loc>https://v3rtigo.org/posts/</loc>
+    <lastmod>2023-08-19T13:02:57-07:00</lastmod>
+  </url><url>
+    <loc>https://v3rtigo.org/posts/tools/</loc>
+    <lastmod>2023-08-19T13:02:57-07:00</lastmod>
+  </url><url>
+    <loc>https://v3rtigo.org/posts/the-adventure-begins/</loc>
+    <lastmod>2023-08-17T15:07:11-07:00</lastmod>
   </url><url>
     <loc>https://v3rtigo.org/categories/</loc>
   </url><url>
+    <loc>https://v3rtigo.org/hacking-trash/</loc>
+  </url><url>
+    <loc>https://v3rtigo.org/news/</loc>
+  </url><url>
+    <loc>https://v3rtigo.org/resources/</loc>
+  </url><url>
     <loc>https://v3rtigo.org/tags/</loc>
+  </url><url>
+    <loc>https://v3rtigo.org/about/</loc>
   </url>
 </urlset>

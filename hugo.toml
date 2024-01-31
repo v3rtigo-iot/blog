@@ -49,5 +49,5 @@ copyright = "© v3rtigo 2023"
 
 
 
-# show selector to switch language - NOT WORKING
+# show selector to switch language - NO OTHER LANGUAGES SETUP YET
     showLanguageSelector = true

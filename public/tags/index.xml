@@ -5,6 +5,7 @@
     <link>https://v3rtigo.org/tags/</link>
     <description>Recent content in Tags on Adventures in IoT</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://v3rtigo.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <copyright>© v3rtigo 2023</copyright><atom:link href="https://v3rtigo.org/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
