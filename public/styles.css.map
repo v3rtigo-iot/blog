@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "styles.css",
-	"sourceRoot": "C:/Users/natha/Documents/blog/Adventures in IoT",
+	"sourceRoot": "/media/keys/Dev/blog/Adventures in IoT",
 	"sources": [
 		"css/base.scss",
 		"themes/terminal/assets/css/variables.scss",
