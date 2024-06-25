@@ -1,5 +1,6 @@
 +++
 title = "Creating an Emux Environment With Ludus"
+header_image = "virtualembedded.png"
 date = "2024-06-22T15:34:42-04:00"
 author = "v3rtigo"
 cover = "virtualembedded.png"
