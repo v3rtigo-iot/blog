@@ -366,6 +366,16 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;9999/tcp open  abyss
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Nmap &lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; IP address &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; host up&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; scanned in 0.11 seconds&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img alt=&#34;winning!&#34; src=&#34;http://localhost:1313/winning.png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, reploy and you&amp;rsquo;re back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus range rm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;WARN&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;!!! This will destroy all VMs &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; the range of user ID: mooody !!!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Do you want to &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;? &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;y/N&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;  Range destroy in progress&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Simple as that! There&amp;rsquo;s documentation out there for all the devices that are being emulated as well as write-ups and exploits. Do the research and you&amp;rsquo;ll be rewarded with a ton of great information and experience. Feel free to reach out if you have any questions or thoughts. The Ludus crew also have a discord server that can be found on their main site &lt;a href=&#34;http://ludus.cloud&#34;&gt;http://ludus.cloud&lt;/a&gt; Enjoy!&lt;/p&gt;
 </content>
     </item>
     

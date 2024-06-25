@@ -517,6 +517,16 @@
 </span></span><span style="display:flex;"><span>9999/tcp open  abyss
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 0.11 seconds</span></span></code></pre></div><p><img alt="winning!" src="/winning.png"></p>
+<h3 id="conclusion">Conclusion<a href="#conclusion" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, reploy and you&rsquo;re back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus range rm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>WARN<span style="color:#f92672">]</span>  
+</span></span><span style="display:flex;"><span>!!! This will destroy all VMs <span style="color:#66d9ef">for</span> the range of user ID: mooody !!!
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Do you want to <span style="color:#66d9ef">continue</span>? <span style="color:#f92672">(</span>y/N<span style="color:#f92672">)</span>: 
+</span></span><span style="display:flex;"><span>y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Range destroy in progress</span></span></code></pre></div><p>Simple as that! There&rsquo;s documentation out there for all the devices that are being emulated as well as write-ups and exploits. Do the research and you&rsquo;ll be rewarded with a ton of great information and experience. Feel free to reach out if you have any questions or thoughts. The Ludus crew also have a discord server that can be found on their main site <a href="http://ludus.cloud">http://ludus.cloud</a> Enjoy!</p>
 
       </div></div>
 

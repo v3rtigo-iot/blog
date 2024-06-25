@@ -346,3 +346,17 @@ Nmap done: 1 IP address (1 host up) scanned in 0.11 seconds
 
 
 ![winning!](/winning.png)
+
+### Conclusion
+
+Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, reploy and you're back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command 
+```bash 
+local:~$ ludus range rm
+[WARN]  
+!!! This will destroy all VMs for the range of user ID: mooody !!!
+ 
+Do you want to continue? (y/N): 
+y
+[INFO]  Range destroy in progress
+```
+Simple as that! There's documentation out there for all the devices that are being emulated as well as write-ups and exploits. Do the research and you'll be rewarded with a ton of great information and experience. Feel free to reach out if you have any questions or thoughts. The Ludus crew also have a discord server that can be found on their main site http://ludus.cloud Enjoy!
