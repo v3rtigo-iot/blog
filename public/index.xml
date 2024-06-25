@@ -10,10 +10,10 @@
     <lastBuildDate>Sat, 22 Jun 2024 15:34:42 -0400</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Creating an Emux Environment With Ludus</title>
-      <link>http://localhost:1313/posts/emux-ludus/spspinning-up-emux-with-ludus/</link>
+      <link>http://localhost:1313/posts/emux-ludus/emux/</link>
       <pubDate>Sat, 22 Jun 2024 15:34:42 -0400</pubDate>
       
-      <guid>http://localhost:1313/posts/emux-ludus/spspinning-up-emux-with-ludus/</guid>
+      <guid>http://localhost:1313/posts/emux-ludus/emux/</guid>
       <description>What Is Ludus?! Ludus (https://ludus.cloud) has quickly come into the spotlight as an amazing tool for easily building, destroying, and rebuilding virtualized lab enviroments (with a general focus of offensive and defensive security) for everything from ADCS to GOAD to an Elastic Security Lab, and more. In this blog we&amp;rsquo;ll dive into a new addition, the EMUX Environment. This lab will install EMUX and run one or multiple emulated devices on Debian based hosts.</description>
       <content>&lt;h3 id=&#34;what-is-ludus&#34;&gt;What Is Ludus?!&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Ludus&lt;/strong&gt;&lt;/em&gt; (&lt;a href=&#34;https://ludus.cloud&#34;&gt;https://ludus.cloud&lt;/a&gt;) has quickly come into the spotlight as an amazing tool for easily building, destroying, and rebuilding virtualized lab enviroments (with a general focus of offensive and defensive security) for everything from ADCS to GOAD to an Elastic Security Lab, and more. In this blog we&amp;rsquo;ll dive into a new addition, the EMUX Environment. This lab will install EMUX and run one or multiple emulated devices on Debian based hosts.&lt;/p&gt;
