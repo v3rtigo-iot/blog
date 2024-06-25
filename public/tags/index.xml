@@ -2,9 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Adventures in IoT</title>
-    <link>https://v3rtigo.org/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Adventures in IoT</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>© v3rtigo 2024</copyright><atom:link href="https://v3rtigo.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <copyright>© v3rtigo 2024</copyright><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -2,17 +2,379 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Adventures in IoT</title>
-    <link>https://v3rtigo.org/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Adventures in IoT</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
     <copyright>© v3rtigo 2024</copyright>
-    <lastBuildDate>Sat, 19 Aug 2023 13:02:57 -0700</lastBuildDate><atom:link href="https://v3rtigo.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jun 2024 15:34:42 -0400</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating an Emux Environment With Ludus</title>
+      <link>http://localhost:1313/posts/emux-ludus/spspinning-up-emux-with-ludus/</link>
+      <pubDate>Sat, 22 Jun 2024 15:34:42 -0400</pubDate>
+      
+      <guid>http://localhost:1313/posts/emux-ludus/spspinning-up-emux-with-ludus/</guid>
+      <description>What Is Ludus?! Ludus (https://ludus.cloud) has quickly come into the spotlight as an amazing tool for easily building, destroying, and rebuilding virtualized lab enviroments (with a general focus of offensive and defensive security) for everything from ADCS to GOAD to an Elastic Security Lab, and more. In this blog we&amp;rsquo;ll dive into a new addition, the EMUX Environment. This lab will install EMUX and run one or multiple emulated devices on Debian based hosts.</description>
+      <content>&lt;h3 id=&#34;what-is-ludus&#34;&gt;What Is Ludus?!&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Ludus&lt;/strong&gt;&lt;/em&gt; (&lt;a href=&#34;https://ludus.cloud&#34;&gt;https://ludus.cloud&lt;/a&gt;) has quickly come into the spotlight as an amazing tool for easily building, destroying, and rebuilding virtualized lab enviroments (with a general focus of offensive and defensive security) for everything from ADCS to GOAD to an Elastic Security Lab, and more. In this blog we&amp;rsquo;ll dive into a new addition, the EMUX Environment. This lab will install EMUX and run one or multiple emulated devices on Debian based hosts.&lt;/p&gt;
+&lt;h3 id=&#34;a-brief-background&#34;&gt;A Brief Background&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://emux.exploitlab.net/&#34;&gt;https://emux.exploitlab.net/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/therealsaumil/emux/&#34;&gt;https://github.com/therealsaumil/emux/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Originally created by Saumil Shah (@therealsaumil), EMUX is a firmware emulation framework that allows emulation of various devices (both ARM and MIPS architectures). On the website listed above, there is a walk-through for the docker setup but in this case, we&amp;rsquo;ll be using Ludus and Proxmox which makes things more ideal for temporary labs as described above.&lt;/p&gt;
+&lt;h3 id=&#34;why-are-we-doing-this&#34;&gt;Why Are We Doing This?&lt;/h3&gt;
+&lt;p&gt;If you want to practice hacking hardware embedded systems, this is a wonderful starting point. You are provided easy emulation of disposable infrastructure that you can hack to your hearts content. If you are interesting in IoT, hardware hacking, or embedded systems, this is the place to start. &lt;em&gt;&lt;strong&gt;And&lt;/strong&gt;&lt;/em&gt; you&amp;rsquo;ll learn some over fun stuff along that way.&lt;/p&gt;
+&lt;h3 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;ve decided to move forward assuming you have already setup your basic Ludus system and build the default templates. In this case we&amp;rsquo;ll only be utilizing the Debian templates. Here&amp;rsquo;s a quick outline of what we&amp;rsquo;re going to do:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add the EMUX role&lt;/li&gt;
+&lt;li&gt;Create and set our range config&lt;/li&gt;
+&lt;li&gt;Deploy the range&lt;/li&gt;
+&lt;li&gt;Navigate to the newly created systems!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We&amp;rsquo;re not going to get into hacking each of these systems in this post but you should be off to the races once we are done. Speaking of systems, i&amp;rsquo;m sure you&amp;rsquo;re wondering what exactly it is that we are emulating. Below is a table of the devices that we are able to emulate by default.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Number&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Ludus Short Name&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;Full Name&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DV-ARM&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Damn Vulnerable ARM Router&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DV-MIPSEL&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Damn Vulnerable MIPS Router (Little Endian)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DV-MIPSEB&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Damn Vulnerable MIPS Router (Big Endian)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;PH0WNCTF&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;R0 Port Controller - Ph0wn 2021 CTF Challenge&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;TRI227WF&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Trivision NC-227-WF IP Camera&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;AC15&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Tenda AC15 Wi-Fi Router&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ARCHERC9&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;Archer C9 Wi-Fi Router&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DIR615C&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;D-Link DIR615C Wi-Fi Router&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;DCS935L&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;D-Link DCS-935L Camera&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;There&amp;rsquo;s a bunch of cool stuff here, right?! My thoughts exactly. Let&amp;rsquo;s get this spun up so we can get to hacking. First things first, below are the links to other docs we are going to need as we work our way through setting all this up. These are more or less in order from where we start to where we &amp;ldquo;finish&amp;rdquo;. Again, this is going to assume that we&amp;rsquo;ve completed the basic &amp;ldquo;Build Templates&amp;rdquo; portion of the Ludus setup.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Roles &amp;amp; Adding a role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://docs.ludus.cloud/docs/roles&#34;&gt;https://docs.ludus.cloud/docs/roles&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;GIT repo for the EMUX role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/badsectorlabs/ludus_emux&#34;&gt;https://github.com/badsectorlabs/ludus_emux&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Range configuration file documentation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://docs.ludus.cloud/docs/configuration&#34;&gt;https://docs.ludus.cloud/docs/configuration&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Deploy a range&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://docs.ludus.cloud/docs/quick-start/deploy-range&#34;&gt;https://docs.ludus.cloud/docs/quick-start/deploy-range&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;That&amp;rsquo;s pretty much it. Now, in each of these there is a lot more detailed documentation that is 100000% worth familiarizing yourself with. In our case, i&amp;rsquo;m going to focus only on what we need to get the range up in a default state, however, there is a ton of other tweaks you can make if that&amp;rsquo;s your thing.&lt;/p&gt;
+&lt;h3 id=&#34;adding-a-role&#34;&gt;Adding A Role&lt;/h3&gt;
+&lt;p&gt;There are a couple ways to accompish this as you&amp;rsquo;ll see in the Ludus docs. We can either add directly from the Ansible Galaxy or from a local directory, if we git clone the repo. In this case let&amp;rsquo;s just add from the Ansible Galaxy.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus ansible role add badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# I also like seeing what&amp;#39;s going on in the background so we can do...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus ansible role add badsectorlabs.ludus_emux --verbose
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# For role updates we&amp;#39;ll run. This will re-add with updates applied.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus ansible role add badsectorlabs.ludus_emux --force --verbose&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once we&amp;rsquo;ve run this command, if verbose is set, this is the output we&amp;rsquo;ll see. Otherwise you&amp;rsquo;ll just see the last line (if no verbose). You&amp;rsquo;ll see that I&amp;rsquo;m using the &amp;ndash;force flag, this is only because i&amp;rsquo;ve already added the role to my environment so there is no need to do this for the inital setup.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus ansible role add badsectorlabs.ludus_emux --verbose --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:104 No config file found - using defaults
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:106 --- Configuration from cli and read from file ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	json &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; %!s&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;bool&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;false&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; https://198.51.100.1:8080
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	proxy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	verify &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; %!s&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;bool&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;false&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	user &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	verbose &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; %!s&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;bool&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:117 ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:131 Got API key: mooody.***REDACTED***
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/rest.InitClient:restapi.go:46 Endpoint URL:  https://198.51.100.1:8080
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;DEBUG&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; 2024/06/22 22:10:06 ludus/rest.InitClient:restapi.go:56 Endpoint SSL Verify:  false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;⠹ Waiting &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; server...2024/06/22 22:10:08.955897 DEBUG RESTY 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;==============================================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;~~~ REQUEST ~~~
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;POST  /ansible/role  HTTP/1.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HOST   : 198.51.100.1:8080
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HEADERS:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Accept: application/json
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Content-Type: application/json
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	User-Agent: ludus-client/v1.4.2+1e8a1bc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	X-Api-Key: mooody.***REDACTED***
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BODY   :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;role&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;badsectorlabs.ludus_emux&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;force&amp;#34;&lt;/span&gt;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;version&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;action&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;install&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;------------------------------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;~~~ RESPONSE ~~~
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;STATUS       : &lt;span style=&#34;color:#ae81ff&#34;&gt;201&lt;/span&gt; Created
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PROTO        : HTTP/2.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;RECEIVED AT  : 2024-06-22T22:10:08.955851919-04:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TIME DURATION: 2.274334643s
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HEADERS      :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Content-Length: &lt;span style=&#34;color:#ae81ff&#34;&gt;61&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Content-Type: application/json; charset&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;utf-8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Date: Sun, &lt;span style=&#34;color:#ae81ff&#34;&gt;23&lt;/span&gt; Jun &lt;span style=&#34;color:#ae81ff&#34;&gt;2024&lt;/span&gt; 02:10:08 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BODY         :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Successfully installed: badsectorlabs.ludus_emux&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;==============================================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;  2024/06/22 22:10:08 Successfully installed: badsectorlabs.ludus_emux&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Excellent, now we have the role added. Once again, assuming we&amp;rsquo;ve built our templates, it&amp;rsquo;s now time to create our config. We&amp;rsquo;ll discuss two was to deploy this range. The first, deploying a single machine to emulate a single device. The second, deploy nine (9) machines that will each emulate a single device. Technically it will be two (2) or ten (10) machines respectively as one machine will act as the router. We&amp;rsquo;re going to make a pretty straight forward config file and then set it to be used when the machines are deployed.&lt;/p&gt;
+&lt;p&gt;The following will be our single device configuration file. It&amp;rsquo;s important to refer to the Ludus EMUX git page or the table above to choose the number that coorasponds with the device you are trying to emulate. This number will need to be entered under &lt;strong&gt;role_vars -&amp;gt; ludus_emux_device:&lt;/strong&gt; &lt;em&gt;number&lt;/em&gt;. These numbers will currently range from zero-eight (0-8). In this example we&amp;rsquo;ll use four (4).&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ludus:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, let&amp;rsquo;s say you happen to want to spin up all the things. The following is a config that I use. Note that there are a few things here that you must change in order for this to work properly. (they are changed already in the following config, it&amp;rsquo;s ready to use.) First, you&amp;rsquo;ll need to choose a different &lt;strong&gt;ip_last_octet:&lt;/strong&gt; for each. You&amp;rsquo;ll end up with something like &lt;strong&gt;10.5.10.4&lt;/strong&gt; in the example above. You&amp;rsquo;ll also need to add something to the &lt;strong&gt;vm_name&lt;/strong&gt; and the &lt;strong&gt;host_name&lt;/strong&gt;. In my case I just add numbers that iterate up. And lastly, as mentioned, you&amp;rsquo;ll need to change each of the &lt;strong&gt;ludus_enux_device&lt;/strong&gt; numbers to iterate from zero-eight (0-8).&lt;/p&gt;
+&lt;p&gt;For simplicities sake I use the number of the device in the VM/Hostnames. If you&amp;rsquo;re wondering, I just don&amp;rsquo;t like starting with &lt;strong&gt;.1&lt;/strong&gt; so I went with &lt;strong&gt;.3&lt;/strong&gt; instead. Whatever you want will work, but best to make it easy on yourself. Ah and one last thing, you&amp;rsquo;ll use your CLI editor of choice to create a file called &lt;strong&gt;ludus-range-config.yml&lt;/strong&gt;. Within that file, paste your config. (you only need &lt;strong&gt;ludus:&lt;/strong&gt; once, at the top. don&amp;rsquo;t be like me and try and put it before every machine in the config. We live and learn&amp;hellip;)&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ludus:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX6&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux6&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX7&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux7&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  - vm_name: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-EMUX8&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hostname: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ range_id }}-emux8&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    template: debian-12-x64-server-template
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vlan: &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ip_last_octet: &lt;span style=&#34;color:#ae81ff&#34;&gt;11&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ram_gb: &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cpus: &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    linux: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    roles:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - badsectorlabs.ludus_emux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    role_vars:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ludus_emux_device: &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Sweet! We&amp;rsquo;re almost to the hacking! Now that that is done, all that&amp;rsquo;s left is to set the config and let the range build. To set your config you&amp;rsquo;ll use the following command and should see the output below.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus range config set -f ludus-range-config.yml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;  Your range config has been successfully updated.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s build this thing! Remember, this can take a little bit of time depending on how many machines to decide to build. I find that it&amp;rsquo;s best to just follow the logs as the build, because it&amp;rsquo;s fun to watch it, and because you&amp;rsquo;ll know when it&amp;rsquo;s done. You&amp;rsquo;ll enter the following to build and see the output below!&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus range deploy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;INFO&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;  Range deploy started&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I won&amp;rsquo;t paste the entire output of the logs but we&amp;rsquo;ll look at the command to follow and the end of the output so you know when it&amp;rsquo;s done. Enter the following and then watch the magic happen. The output below the command will be what you see when the build finishes. This output will vary depending on the number of machines you deploy. What we see below is the result of a single machine being built. (remember that it also builds the router. It will only build one router no matter how many machines you deploy)&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ ludus range logs -f
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# When the build finishes you&amp;#39;ll see this...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PLAY RECAP *********************************************************************
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;localhost                  : ok&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;39&lt;/span&gt;   changed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt;    unreachable&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    failed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    skipped&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;38&lt;/span&gt;   rescued&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    ignored&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mooody-EMUX4               : ok&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;54&lt;/span&gt;   changed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;   unreachable&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    failed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    skipped&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;52&lt;/span&gt;   rescued&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    ignored&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;   
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mooody-router-debian11-x64 : ok&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;38&lt;/span&gt;   changed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;   unreachable&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    failed&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    skipped&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;    rescued&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;    ignored&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Will you look at that! We did it! Don&amp;rsquo;t worry about the number to the left of the machine, this will vary based on other things but doesn&amp;rsquo;t matter. If you happened to deploy ALL the machines, you&amp;rsquo;ll see a lot more here!&lt;/p&gt;
+&lt;p&gt;One quick note, if you need to login directly to any of these boxes (not the emulated device itself) the username and password will be &lt;strong&gt;debian:debian&lt;/strong&gt;. This information can also be found in the Ludus EMUX git repo but as a quick reference, ports from the emulated device are generally mapped 1:1 with the exception of &lt;strong&gt;SSH(22)&lt;/strong&gt; where &lt;strong&gt;2222&lt;/strong&gt; will be used to ssh into the emulated device. Again though, to get onto the machine that is emulating the device, you&amp;rsquo;ll use &lt;strong&gt;22&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;We did it!&#34; src=&#34;http://localhost:1313/dewploy.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s take a quick look and verify that everything worked. Remember, each machine will have different ports/services/etc as these are various emulated devices. In this example we&amp;rsquo;ll use a device that has port 80 open and a login panel available to us for the device being emulated. A quick nmap scan shows the open ports of the emulated device (and 22 for the debian host). Navigating to port &lt;strong&gt;80&lt;/strong&gt; on the IP of the host (10.5.10.4 in this case) we see the login page for the device! Winning!&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local:~$ nmap 10.5.10.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Starting Nmap 7.93 &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt; https://nmap.org &lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; at 2024-06-25 15:52 EDT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Nmap scan report &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; 10.5.10.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Host is up &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.00012s latency&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Not shown: &lt;span style=&#34;color:#ae81ff&#34;&gt;993&lt;/span&gt; closed tcp ports &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;reset&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PORT     STATE SERVICE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;22/tcp   open  ssh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;23/tcp   open  telnet
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;80/tcp   open  http
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;443/tcp  open  https
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2222/tcp open  EtherNetIP-1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;8080/tcp open  http-proxy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;9999/tcp open  abyss
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Nmap &lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; IP address &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; host up&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; scanned in 0.11 seconds&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img alt=&#34;winning!&#34; src=&#34;http://localhost:1313/winning.png&#34;&gt;&lt;/p&gt;
+</content>
+    </item>
+    
     <item>
       <title>Tools of The Trade</title>
-      <link>https://v3rtigo.org/posts/tools/</link>
+      <link>http://localhost:1313/posts/tools/</link>
       <pubDate>Sat, 19 Aug 2023 13:02:57 -0700</pubDate>
       
-      <guid>https://v3rtigo.org/posts/tools/</guid>
+      <guid>http://localhost:1313/posts/tools/</guid>
       <description>We&amp;rsquo;ll begin our journey with a look at essential tools needed to begin basic analysis of IoT devices. Once we&amp;rsquo;ve discussed the basics, we&amp;rsquo;ll move into those that add to quality of life and finally tools for more advanced hardware analysis.
 This is by no means an exhaustive list nor are these in a strict order of importance. That said, all the tools in this initial group are arguably all necessary for the basic analysis deep dives we&amp;rsquo;ll do as the blog progresses.</description>
       <content>&lt;p&gt;We&amp;rsquo;ll begin our journey with a look at essential tools needed to begin basic analysis of IoT devices. Once we&amp;rsquo;ve discussed the basics, we&amp;rsquo;ll move into those that add to quality of life and finally tools for more advanced hardware analysis.&lt;/p&gt;
@@ -179,10 +541,10 @@ A specialized fan used to draw away the fumes produced during soldering. Solderi
     
     <item>
       <title>The Adventure Begins</title>
-      <link>https://v3rtigo.org/posts/the-adventure-begins/</link>
+      <link>http://localhost:1313/posts/the-adventure-begins/</link>
       <pubDate>Thu, 17 Aug 2023 15:07:11 -0700</pubDate>
       
-      <guid>https://v3rtigo.org/posts/the-adventure-begins/</guid>
+      <guid>http://localhost:1313/posts/the-adventure-begins/</guid>
       <description>Hello there! I&amp;rsquo;m Nathan. To foster discourse, collaboration and ensure I take good notes for myself, I&amp;rsquo;ve created blog to document the journey into the world of IoT/Hardware hacking. It&amp;rsquo;s super exciting to share this content and have you all along as we go through the trials and tribulations of learning a complex topic. Join me as we hack some hardware and dive into interesting vulnerabilities and realities of the hardware we all use every day and that continues to become more prolific.</description>
       <content>&lt;p&gt;Hello there! I&amp;rsquo;m Nathan. To foster discourse, collaboration and ensure I take good notes for myself, I&amp;rsquo;ve created blog to document the journey into the world of IoT/Hardware hacking. It&amp;rsquo;s super exciting to share this content and have you all along as we go through the trials and tribulations of learning a complex topic. Join me as we hack some hardware and dive into interesting vulnerabilities and realities of the hardware we all use every day and that continues to become more prolific.&lt;/p&gt;
 &lt;p&gt;There&amp;rsquo;s a very important point I&amp;rsquo;d like to mention.  The learning curve will hit hard.  Taking our time and establishing a solid foundation is critical to continuing the journey in such a way that we are effectively learning and not just wasting time.  This field is multifaceted and will require depth of knowledge in many realms. E.g., hacking, linux, soldering, electrical engineering, reverse engineering, radio communications and so much more even within those disicplines.&lt;/p&gt;
@@ -192,10 +554,10 @@ A specialized fan used to draw away the fumes produced during soldering. Solderi
     
     <item>
       <title>Hacking Trash</title>
-      <link>https://v3rtigo.org/hacking-trash/</link>
+      <link>http://localhost:1313/hacking-trash/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://v3rtigo.org/hacking-trash/</guid>
+      <guid>http://localhost:1313/hacking-trash/</guid>
       <description>Here I&amp;rsquo;ll be sharing videos from my stream Hacking Trashing where we take devices that I&amp;rsquo;ve found at thift stores (or that my coworkers send me), and attempt to hack them, or at the very least identify interesting stuff! I&amp;rsquo;ve found this to be amazing practice as often these devices are older, insecure, and useful for easily identifying serial interfaces.
 hacking_trash -&amp;gt; Twitch
 @HackingTrash -&amp;gt; YouTube</description>
@@ -207,13 +569,57 @@ hacking_trash -&amp;gt; Twitch
     
     <item>
       <title>Hardware Hacking &amp; Cybersecurity News</title>
-      <link>https://v3rtigo.org/news/</link>
+      <link>http://localhost:1313/news/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://v3rtigo.org/news/</guid>
-      <description>ExCobalt Cyber Gang Targets Russian Sectors with New GoRed Backdoor   Warning: New Adware Campaign Targets Meta Quest App Seekers   U.S. Treasury Sanctions 12 Kaspersky Executives Amid Software Ban   Chinese Hackers Deploy SpiceRAT and SugarGh0st in Global Espionage Campaign   Military-themed Email Scam Spreads Malware to Infect Pakistani Users   How to Use Tines&amp;#39;s SOC Automation Capability Matrix   Oyster Backdoor Spreading via Trojanized Popular Software Downloads   SolarWinds Serv-U Vulnerability Under Active Attack - Patch Immediately   U.</description>
+      <guid>http://localhost:1313/news/</guid>
+      <description>New Attack Technique Exploits Microsoft Management Console Files How to Cut Costs with a Browser Security Platform New Cyberthreat &amp;#39;Boolka&amp;#39; Deploying BMANAGER Trojan via SQLi Attacks Wikileaks&amp;#39; Julian Assange Released from U.K. Prison, Heads to Australia 4 FIN9-linked Vietnamese Hackers Indicted in $71M U.S. Cybercrime Spree Multiple WordPress Plugins Compromised: Hackers Create Rogue Admin Accounts Google Introduces Project Naptime for AI-Powered Vulnerability Research Critical RCE Vulnerability Discovered in Ollama AI Infrastructure Tool Ease the Burden with AI-Driven Threat Intelligence Reporting RedJuliett Cyber Espionage Campaign Hits 75 Taiwanese Organizations Multiple Threat Actors Deploying Open-Source Rafel RAT to Target Android Devices ExCobalt Cyber Gang Targets Russian Sectors with New GoRed Backdoor Warning: New Adware Campaign Targets Meta Quest App Seekers U.</description>
       <content>
   &lt;ul&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/new-attack-technique-exploits-microsoft.html&#34;&gt;New Attack Technique Exploits Microsoft Management Console Files&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/how-to-cut-costs-with-browser-security.html&#34;&gt;How to Cut Costs with a Browser Security Platform&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/new-cyberthreat-boolka-deploying.html&#34;&gt;New Cyberthreat &amp;#39;Boolka&amp;#39; Deploying BMANAGER Trojan via SQLi Attacks&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/wikileaks-julian-assange-released-from.html&#34;&gt;Wikileaks&amp;#39; Julian Assange Released from U.K. Prison, Heads to Australia&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/4-fin9-linked-vietnamese-hackers.html&#34;&gt;4 FIN9-linked Vietnamese Hackers Indicted in $71M U.S. Cybercrime Spree&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/multiple-wordpress-plugins-compromised.html&#34;&gt;Multiple WordPress Plugins Compromised: Hackers Create Rogue Admin Accounts&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/google-introduces-project-naptime-for.html&#34;&gt;Google Introduces Project Naptime for AI-Powered Vulnerability Research&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/critical-rce-vulnerability-discovered.html&#34;&gt;Critical RCE Vulnerability Discovered in Ollama AI Infrastructure Tool&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/ease-burden-with-ai-driven-threat.html&#34;&gt;Ease the Burden with AI-Driven Threat Intelligence Reporting&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/redjuliett-cyber-espionage-campaign.html&#34;&gt;RedJuliett Cyber Espionage Campaign Hits 75 Taiwanese Organizations&lt;/a&gt;
+    &lt;/li&gt;
+    
+    &lt;li&gt;
+      &lt;a href=&#34;https://thehackernews.com/2024/06/iranian-hackers-deploy-rafel-rat-in.html&#34;&gt;Multiple Threat Actors Deploying Open-Source Rafel RAT to Target Android Devices&lt;/a&gt;
+    &lt;/li&gt;
     
     &lt;li&gt;
       &lt;a href=&#34;https://thehackernews.com/2024/06/excobalt-cyber-gang-targets-russian.html&#34;&gt;ExCobalt Cyber Gang Targets Russian Sectors with New GoRed Backdoor&lt;/a&gt;
@@ -371,50 +777,6 @@ hacking_trash -&amp;gt; Twitch
       &lt;a href=&#34;https://thehackernews.com/2024/06/why-regulated-industries-are-turning-to.html&#34;&gt;Why Regulated Industries are Turning to Military-Grade Cyber Defenses&lt;/a&gt;
     &lt;/li&gt;
     
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/zkteco-biometric-system-found.html&#34;&gt;ZKTeco Biometric System Found Vulnerable to 24 Critical Security Flaws&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/north-korean-hackers-target-brazilian.html&#34;&gt;North Korean Hackers Target Brazilian Fintech with Sophisticated Phishing Tactics&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/microsoft-delays-ai-powered-recall.html&#34;&gt;Microsoft Delays AI-Powered Recall Feature for Copilot&amp;#43; PCs Amid Security Concerns&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/new-attack-technique-sleepy-pickle.html&#34;&gt;New Attack Technique &amp;#39;Sleepy Pickle&amp;#39; Targets Machine Learning Models&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/arid-viper-launches-mobile-espionage.html&#34;&gt;Arid Viper Launches Mobile Espionage Campaign with AridSpy Malware&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/why-saas-security-is-suddenly-hot.html&#34;&gt;Why SaaS Security is Suddenly Hot: Racing to Defend and Comply&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/pakistan-linked-malware-campaign.html&#34;&gt;Pakistan-linked Malware Campaign Evolves to Target Windows, Android, and macOS&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/cybercriminals-employ-phantomloader-to.html&#34;&gt;Cybercriminals Employ PhantomLoader to Distribute SSLoad Malware&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/ukraine-police-arrest-suspect-linked-to.html&#34;&gt;Ukraine Police Arrest Suspect Linked to LockBit and Conti Ransomware Groups&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/google-warns-of-pixel-firmware-security.html&#34;&gt;Google Warns of Pixel Firmware Security Flaw Exploited as Zero-Day&lt;/a&gt;
-    &lt;/li&gt;
-    
-    &lt;li&gt;
-      &lt;a href=&#34;https://thehackernews.com/2024/06/new-cross-platform-malware-noodle-rat.html&#34;&gt;New Cross-Platform Malware &amp;#39;Noodle RAT&amp;#39; Targets Windows and Linux Systems&lt;/a&gt;
-    &lt;/li&gt;
-    
   &lt;/ul&gt;
 
 
@@ -425,20 +787,20 @@ hacking_trash -&amp;gt; Twitch
     
     <item>
       <title>IoT Learning Resources</title>
-      <link>https://v3rtigo.org/resources/</link>
+      <link>http://localhost:1313/resources/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://v3rtigo.org/resources/</guid>
+      <guid>http://localhost:1313/resources/</guid>
       <description></description>
       <content></content>
     </item>
     
     <item>
       <title>Who am I?</title>
-      <link>https://v3rtigo.org/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://v3rtigo.org/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>Hello there! I&amp;rsquo;m Nathan. A penetration tester by trade, i&amp;rsquo;ve recently entered the world of hardware hacking, specifically related to IoT (Internet of Things). My background spans various industries and experience and I&amp;rsquo;m excited to share my journey. Hopefully you can learn along with me and of course, teach me things through this process. I&amp;rsquo;m always open for comms and collaboration so don&amp;rsquo;t hesitate to reach out!!</description>
       <content>&lt;p&gt;Hello there! I&amp;rsquo;m Nathan. A penetration tester by trade, i&amp;rsquo;ve recently entered the world of hardware hacking, specifically related to IoT (Internet of Things). My background spans various industries and experience and I&amp;rsquo;m excited to share my journey. Hopefully you can learn along with me and of course, teach me things through this process.  I&amp;rsquo;m always open for comms and collaboration so don&amp;rsquo;t hesitate to reach out!!&lt;/p&gt;
 </content>
