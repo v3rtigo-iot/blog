@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+    <title>Creating an Emux Environment With Ludus :: Adventures in IoT</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&#39;s spin up a virtual environment with ALL the Emux emulated environments!" />
+<meta name="keywords" content="" />
+
+  <meta name="robots" content="noodp" />
+
+<link rel="canonical" href="http://localhost:1313/posts/emux-ludus/" />
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/styles.css">
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="http://localhost:1313/img/theme-colors/green.png">
+  <link rel="apple-touch-icon" href="http://localhost:1313/img/theme-colors/green.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Creating an Emux Environment With Ludus">
+<meta property="og:description" content="Let&#39;s spin up a virtual environment with ALL the Emux emulated environments!" />
+<meta property="og:url" content="http://localhost:1313/posts/emux-ludus/" />
+<meta property="og:site_name" content="Adventures in IoT" />
+
+  
+  
+    
+  
+  <meta property="og:image" content="http://localhost:1313/posts/emux-ludus/virtualembedded.png">
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+
+
+  <meta property="article:published_time" content="2024-06-22 15:34:42 -0400 EDT" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="green">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="http://localhost:1313/">
+  <div class="logo">
+    Adventures in IoT
+  </div>
+</a>
+
+    </div>
+    
+      <ul class="menu menu--mobile">
+  <li class="menu__trigger">Menu&nbsp;▾</li>
+  <li>
+    <ul class="menu__dropdown">
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/hacking-trash">Hacking Trash</a></li>
+        
+      
+        
+          <li><a href="/news">News</a></li>
+        
+      
+        
+          <li><a href="/resources">Resources</a></li>
+        
+      
+      
+    </ul>
+  </li>
+</ul>
+
+    
+    
+  </div>
+  
+    <nav class="navigation-menu">
+  <ul class="navigation-menu__inner menu--desktop">
+    
+      
+        
+          <li><a href="/about" >About</a></li>
+        
+      
+        
+          <li><a href="/hacking-trash" >Hacking Trash</a></li>
+        
+      
+        
+          <li><a href="/news" >News</a></li>
+        
+      
+        
+          <li><a href="/resources" >Resources</a></li>
+        
+      
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<article class="post">
+  <h1 class="post-title">
+    <a href="http://localhost:1313/posts/emux-ludus/">Creating an Emux Environment With Ludus</a>
+  </h1>
+  <div class="post-meta"><time class="post-date">2024-06-22</time><span class="post-author">v3rtigo</span></div>
+
+  
+  
+  <img src="/posts/emux-ludus/virtualembedded.png"
+    class="post-cover"
+    alt="Creating an Emux Environment With Ludus"
+    title="Cover Image" />
+
+
+  
+
+  <div class="post-content"><div>
+        <h3 id="what-is-ludus">What Is Ludus?!<a href="#what-is-ludus" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p><em><strong>Ludus</strong></em> (<a href="https://ludus.cloud">https://ludus.cloud</a>) has quickly come into the spotlight as an amazing tool for easily building, destroying, and rebuilding virtualized lab enviroments (with a general focus of offensive and defensive security) for everything from ADCS to GOAD to an Elastic Security Lab, and more. In this blog we&rsquo;ll dive into a new addition, the EMUX Environment. This lab will install EMUX and run one or multiple emulated devices on Debian based hosts.</p>
+<h3 id="a-brief-background">A Brief Background<a href="#a-brief-background" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p><a href="https://emux.exploitlab.net/">https://emux.exploitlab.net/</a></p>
+<p><a href="https://github.com/therealsaumil/emux/">https://github.com/therealsaumil/emux/</a></p>
+<p>Originally created by Saumil Shah (@therealsaumil), EMUX is a firmware emulation framework that allows emulation of various devices (both ARM and MIPS architectures). On the website listed above, there is a walk-through for the docker setup but in this case, we&rsquo;ll be using Ludus and Proxmox which makes things more ideal for temporary labs as described above.</p>
+<h3 id="why-are-we-doing-this">Why Are We Doing This?<a href="#why-are-we-doing-this" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>If you want to practice hacking hardware embedded systems, this is a wonderful starting point. You are provided easy emulation of disposable infrastructure that you can hack to your hearts content. If you are interesting in IoT, hardware hacking, or embedded systems, this is the place to start. <em><strong>And</strong></em> you&rsquo;ll learn some over fun stuff along that way.</p>
+<h3 id="getting-started">Getting Started<a href="#getting-started" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>I&rsquo;ve decided to move forward assuming you have already setup your basic Ludus system and build the default templates. In this case we&rsquo;ll only be utilizing the Debian templates. Here&rsquo;s a quick outline of what we&rsquo;re going to do:</p>
+<ul>
+<li>Add the EMUX role</li>
+<li>Create and set our range config</li>
+<li>Deploy the range</li>
+<li>Navigate to the newly created systems!</li>
+</ul>
+<p>We&rsquo;re not going to get into hacking each of these systems in this post but you should be off to the races once we are done. Speaking of systems, i&rsquo;m sure you&rsquo;re wondering what exactly it is that we are emulating. Below is a table of the devices that we are able to emulate by default.</p>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th style="text-align:center">Ludus Short Name</th>
+<th style="text-align:right">Full Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:center">DV-ARM</td>
+<td style="text-align:right">Damn Vulnerable ARM Router</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align:center">DV-MIPSEL</td>
+<td style="text-align:right">Damn Vulnerable MIPS Router (Little Endian)</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:center">DV-MIPSEB</td>
+<td style="text-align:right">Damn Vulnerable MIPS Router (Big Endian)</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:center">PH0WNCTF</td>
+<td style="text-align:right">R0 Port Controller - Ph0wn 2021 CTF Challenge</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:center">TRI227WF</td>
+<td style="text-align:right">Trivision NC-227-WF IP Camera</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align:center">AC15</td>
+<td style="text-align:right">Tenda AC15 Wi-Fi Router</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align:center">ARCHERC9</td>
+<td style="text-align:right">Archer C9 Wi-Fi Router</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align:center">DIR615C</td>
+<td style="text-align:right">D-Link DIR615C Wi-Fi Router</td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align:center">DCS935L</td>
+<td style="text-align:right">D-Link DCS-935L Camera</td>
+</tr>
+</tbody>
+</table>
+<p>There&rsquo;s a bunch of cool stuff here, right?! My thoughts exactly. Let&rsquo;s get this spun up so we can get to hacking. First things first, below are the links to other docs we are going to need as we work our way through setting all this up. These are more or less in order from where we start to where we &ldquo;finish&rdquo;. Again, this is going to assume that we&rsquo;ve completed the basic &ldquo;Build Templates&rdquo; portion of the Ludus setup.</p>
+<table>
+<thead>
+<tr>
+<th>Roles &amp; Adding a role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.ludus.cloud/docs/roles">https://docs.ludus.cloud/docs/roles</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>GIT repo for the EMUX role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/badsectorlabs/ludus_emux">https://github.com/badsectorlabs/ludus_emux</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Range configuration file documentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.ludus.cloud/docs/configuration">https://docs.ludus.cloud/docs/configuration</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Deploy a range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.ludus.cloud/docs/quick-start/deploy-range">https://docs.ludus.cloud/docs/quick-start/deploy-range</a></td>
+</tr>
+</tbody>
+</table>
+<p>That&rsquo;s pretty much it. Now, in each of these there is a lot more detailed documentation that is 100000% worth familiarizing yourself with. In our case, i&rsquo;m going to focus only on what we need to get the range up in a default state, however, there is a ton of other tweaks you can make if that&rsquo;s your thing.</p>
+<h3 id="adding-a-role">Adding A Role<a href="#adding-a-role" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>There are a couple ways to accompish this as you&rsquo;ll see in the Ludus docs. We can either add directly from the Ansible Galaxy or from a local directory, if we git clone the repo. In this case let&rsquo;s just add from the Ansible Galaxy.</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus ansible role add badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I also like seeing what&#39;s going on in the background so we can do...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>local:~$ ludus ansible role add badsectorlabs.ludus_emux --verbose
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># For role updates we&#39;ll run. This will re-add with updates applied.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>local:~$ ludus ansible role add badsectorlabs.ludus_emux --force --verbose</span></span></code></pre></div><p>Once we&rsquo;ve run this command, if verbose is set, this is the output we&rsquo;ll see. Otherwise you&rsquo;ll just see the last line (if no verbose). You&rsquo;ll see that I&rsquo;m using the &ndash;force flag, this is only because i&rsquo;ve already added the role to my environment so there is no need to do this for the inital setup.</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus ansible role add badsectorlabs.ludus_emux --verbose --force
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:104 No config file found - using defaults
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:106 --- Configuration from cli and read from file ---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	json <span style="color:#f92672">=</span> %!s<span style="color:#f92672">(</span>bool<span style="color:#f92672">=</span>false<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	url <span style="color:#f92672">=</span> https://198.51.100.1:8080
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	proxy <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	verify <span style="color:#f92672">=</span> %!s<span style="color:#f92672">(</span>bool<span style="color:#f92672">=</span>false<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	user <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:108 	verbose <span style="color:#f92672">=</span> %!s<span style="color:#f92672">(</span>bool<span style="color:#f92672">=</span>true<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:117 ---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:131 Got API key: mooody.***REDACTED***
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/rest.InitClient:restapi.go:46 Endpoint URL:  https://198.51.100.1:8080
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>DEBUG<span style="color:#f92672">]</span> 2024/06/22 22:10:06 ludus/rest.InitClient:restapi.go:56 Endpoint SSL Verify:  false
+</span></span><span style="display:flex;"><span>⠹ Waiting <span style="color:#66d9ef">for</span> server...2024/06/22 22:10:08.955897 DEBUG RESTY 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==============================================================================</span>
+</span></span><span style="display:flex;"><span>~~~ REQUEST ~~~
+</span></span><span style="display:flex;"><span>POST  /ansible/role  HTTP/1.1
+</span></span><span style="display:flex;"><span>HOST   : 198.51.100.1:8080
+</span></span><span style="display:flex;"><span>HEADERS:
+</span></span><span style="display:flex;"><span>	Accept: application/json
+</span></span><span style="display:flex;"><span>	Content-Type: application/json
+</span></span><span style="display:flex;"><span>	User-Agent: ludus-client/v1.4.2+1e8a1bc
+</span></span><span style="display:flex;"><span>	X-Api-Key: mooody.***REDACTED***
+</span></span><span style="display:flex;"><span>BODY   :
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;badsectorlabs.ludus_emux&#34;</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;force&#34;</span>: true,
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;action&#34;</span>: <span style="color:#e6db74">&#34;install&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>~~~ RESPONSE ~~~
+</span></span><span style="display:flex;"><span>STATUS       : <span style="color:#ae81ff">201</span> Created
+</span></span><span style="display:flex;"><span>PROTO        : HTTP/2.0
+</span></span><span style="display:flex;"><span>RECEIVED AT  : 2024-06-22T22:10:08.955851919-04:00
+</span></span><span style="display:flex;"><span>TIME DURATION: 2.274334643s
+</span></span><span style="display:flex;"><span>HEADERS      :
+</span></span><span style="display:flex;"><span>	Content-Length: <span style="color:#ae81ff">61</span>
+</span></span><span style="display:flex;"><span>	Content-Type: application/json; charset<span style="color:#f92672">=</span>utf-8
+</span></span><span style="display:flex;"><span>	Date: Sun, <span style="color:#ae81ff">23</span> Jun <span style="color:#ae81ff">2024</span> 02:10:08 GMT
+</span></span><span style="display:flex;"><span>BODY         :
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;result&#34;</span>: <span style="color:#e6db74">&#34;Successfully installed: badsectorlabs.ludus_emux&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==============================================================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  2024/06/22 22:10:08 Successfully installed: badsectorlabs.ludus_emux</span></span></code></pre></div><p>Excellent, now we have the role added. Once again, assuming we&rsquo;ve built our templates, it&rsquo;s now time to create our config. We&rsquo;ll discuss two was to deploy this range. The first, deploying a single machine to emulate a single device. The second, deploy nine (9) machines that will each emulate a single device. Technically it will be two (2) or ten (10) machines respectively as one machine will act as the router. We&rsquo;re going to make a pretty straight forward config file and then set it to be used when the machines are deployed.</p>
+<p>The following will be our single device configuration file. It&rsquo;s important to refer to the Ludus EMUX git page or the table above to choose the number that coorasponds with the device you are trying to emulate. This number will need to be entered under <strong>role_vars -&gt; ludus_emux_device:</strong> <em>number</em>. These numbers will currently range from zero-eight (0-8). In this example we&rsquo;ll use four (4).</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ludus:
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">4</span></span></span></code></pre></div><p>Now, let&rsquo;s say you happen to want to spin up all the things. The following is a config that I use. Note that there are a few things here that you must change in order for this to work properly. (they are changed already in the following config, it&rsquo;s ready to use.) First, you&rsquo;ll need to choose a different <strong>ip_last_octet:</strong> for each. You&rsquo;ll end up with something like <strong>10.5.10.4</strong> in the example above. You&rsquo;ll also need to add something to the <strong>vm_name</strong> and the <strong>host_name</strong>. In my case I just add numbers that iterate up. And lastly, as mentioned, you&rsquo;ll need to change each of the <strong>ludus_enux_device</strong> numbers to iterate from zero-eight (0-8).</p>
+<p>For simplicities sake I use the number of the device in the VM/Hostnames. If you&rsquo;re wondering, I just don&rsquo;t like starting with <strong>.1</strong> so I went with <strong>.3</strong> instead. Whatever you want will work, but best to make it easy on yourself. Ah and one last thing, you&rsquo;ll use your CLI editor of choice to create a file called <strong>ludus-range-config.yml</strong>. Within that file, paste your config. (you only need <strong>ludus:</strong> once, at the top. don&rsquo;t be like me and try and put it before every machine in the config. We live and learn&hellip;)</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ludus:
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX0&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux0&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX1&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux1&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX2&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux2&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX3&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux3&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX4&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux4&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX5&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux5&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX6&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux6&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX7&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux7&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  - vm_name: <span style="color:#e6db74">&#34;{{ range_id }}-EMUX8&#34;</span>
+</span></span><span style="display:flex;"><span>    hostname: <span style="color:#e6db74">&#34;{{ range_id }}-emux8&#34;</span>
+</span></span><span style="display:flex;"><span>    template: debian-12-x64-server-template
+</span></span><span style="display:flex;"><span>    vlan: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    ip_last_octet: <span style="color:#ae81ff">11</span>
+</span></span><span style="display:flex;"><span>    ram_gb: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>    cpus: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    linux: true
+</span></span><span style="display:flex;"><span>    roles:
+</span></span><span style="display:flex;"><span>      - badsectorlabs.ludus_emux
+</span></span><span style="display:flex;"><span>    role_vars:
+</span></span><span style="display:flex;"><span>      ludus_emux_device: <span style="color:#ae81ff">8</span></span></span></code></pre></div><p>Sweet! We&rsquo;re almost to the hacking! Now that that is done, all that&rsquo;s left is to set the config and let the range build. To set your config you&rsquo;ll use the following command and should see the output below.</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus range config set -f ludus-range-config.yml
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Your range config has been successfully updated.</span></span></code></pre></div><p>Let&rsquo;s build this thing! Remember, this can take a little bit of time depending on how many machines to decide to build. I find that it&rsquo;s best to just follow the logs as the build, because it&rsquo;s fun to watch it, and because you&rsquo;ll know when it&rsquo;s done. You&rsquo;ll enter the following to build and see the output below!</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus range deploy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Range deploy started</span></span></code></pre></div><p>I won&rsquo;t paste the entire output of the logs but we&rsquo;ll look at the command to follow and the end of the output so you know when it&rsquo;s done. Enter the following and then watch the magic happen. The output below the command will be what you see when the build finishes. This output will vary depending on the number of machines you deploy. What we see below is the result of a single machine being built. (remember that it also builds the router. It will only build one router no matter how many machines you deploy)</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus range logs -f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># When the build finishes you&#39;ll see this...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PLAY RECAP *********************************************************************
+</span></span><span style="display:flex;"><span>localhost                  : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">39</span>   changed<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span>    unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">38</span>   rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>   
+</span></span><span style="display:flex;"><span>mooody-EMUX4               : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">54</span>   changed<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>   unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">52</span>   rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>   
+</span></span><span style="display:flex;"><span>mooody-router-debian11-x64 : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">38</span>   changed<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>   unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>    rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> </span></span></code></pre></div><p>Will you look at that! We did it! Don&rsquo;t worry about the number to the left of the machine, this will vary based on other things but doesn&rsquo;t matter. If you happened to deploy ALL the machines, you&rsquo;ll see a lot more here!</p>
+<p>One quick note, if you need to login directly to any of these boxes (not the emulated device itself) the username and password will be <strong>debian:debian</strong>. This information can also be found in the Ludus EMUX git repo but as a quick reference, ports from the emulated device are generally mapped 1:1 with the exception of <strong>SSH(22)</strong> where <strong>2222</strong> will be used to ssh into the emulated device. Again though, to get onto the machine that is emulating the device, you&rsquo;ll use <strong>22</strong>.</p>
+<p><img alt="We did it!" src="/posts/emux-ludus/dewploy.png"></p>
+<p>Now let&rsquo;s take a quick look and verify that everything worked. Remember, each machine will have different ports/services/etc as these are various emulated devices. In this example we&rsquo;ll use a device that has port 80 open and a login panel available to us for the device being emulated. A quick nmap scan shows the open ports of the emulated device (and 22 for the debian host). Navigating to port <strong>80</strong> on the IP of the host (10.5.10.4 in this case) we see the login page for the device! Winning!</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ nmap 10.5.10.4
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2024-06-25 15:52 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.5.10.4
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.00012s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">993</span> closed tcp ports <span style="color:#f92672">(</span>reset<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT     STATE SERVICE
+</span></span><span style="display:flex;"><span>22/tcp   open  ssh
+</span></span><span style="display:flex;"><span>23/tcp   open  telnet
+</span></span><span style="display:flex;"><span>80/tcp   open  http
+</span></span><span style="display:flex;"><span>443/tcp  open  https
+</span></span><span style="display:flex;"><span>2222/tcp open  EtherNetIP-1
+</span></span><span style="display:flex;"><span>8080/tcp open  http-proxy
+</span></span><span style="display:flex;"><span>9999/tcp open  abyss
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 0.11 seconds</span></span></code></pre></div><p><img alt="winning!" src="/posts/emux-ludus/winning.png"></p>
+<h3 id="conclusion">Conclusion<a href="#conclusion" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, reploy and you&rsquo;re back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command</p>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>local:~$ ludus range rm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>WARN<span style="color:#f92672">]</span>  
+</span></span><span style="display:flex;"><span>!!! This will destroy all VMs <span style="color:#66d9ef">for</span> the range of user ID: mooody !!!
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Do you want to <span style="color:#66d9ef">continue</span>? <span style="color:#f92672">(</span>y/N<span style="color:#f92672">)</span>: 
+</span></span><span style="display:flex;"><span>y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  Range destroy in progress</span></span></code></pre></div><p>Simple as that! There&rsquo;s documentation out there for all the devices that are being emulated as well as write-ups and exploits. Do the research and you&rsquo;ll be rewarded with a ton of great information and experience. Feel free to reach out if you have any questions or thoughts. The Ludus crew also have a discord server that can be found on their main site <a href="http://ludus.cloud">http://ludus.cloud</a> Enjoy!</p>
+
+      </div></div>
+
+  
+
+  
+    
+
+  
+</article>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>© v3rtigo 2024</span>
+    
+      <span>:: <a href="mailto:nathan@v3rtigo.org">Email</a></span>
+      </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+
+
+  
+</div>
+
+</body>
+</html>
