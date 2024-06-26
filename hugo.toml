@@ -45,8 +45,9 @@ copyright = "© v3rtigo 2024"
       name = "News"
       url = "/news"
 
-
-
+[services]
+  [services.googleAnalytics]
+    ID = 'G-NK300VL6DE'
 
 
 # show selector to switch language - NO OTHER LANGUAGES SETUP YET
