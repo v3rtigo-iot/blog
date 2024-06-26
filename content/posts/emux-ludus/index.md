@@ -36,7 +36,7 @@ I've decided to move forward assuming you have already setup your basic Ludus sy
 - Deploy the range
 - Navigate to the newly created systems!
 
-We're not going to get into hacking each of these systems in this post but you should be off to the races once we are done. Speaking of systems, i'm sure you're wondering what exactly it is that we are emulating. Below is a table of the devices that we are able to emulate by default.
+We're not going to get into hacking each of these systems in this post but you should be off to the races once we are done. Speaking of systems, I'm sure you're wondering what exactly it is that we are emulating. Below is a table of the devices that we are able to emulate by default.
 
 | Number | Ludus Short Name | Full Name |
 | ------------- |:-------------:| -----:|
@@ -68,11 +68,11 @@ There's a bunch of cool stuff here, right?! My thoughts exactly. Let's get this 
 | ------------- |
 | https://docs.ludus.cloud/docs/quick-start/deploy-range |
 
-That's pretty much it. Now, in each of these there is a lot more detailed documentation that is 100000% worth familiarizing yourself with. In our case, i'm going to focus only on what we need to get the range up in a default state, however, there is a ton of other tweaks you can make if that's your thing.
+That's pretty much it. Now, in each of these there is a lot more detailed documentation that is 100000% worth familiarizing yourself with. In our case, I'm going to focus only on what we need to get the range up in a default state, however, there is a ton of other tweaks you can make if that's your thing.
 
 ### Adding A Role
 
-There are a couple ways to accompish this as you'll see in the Ludus docs. We can either add directly from the Ansible Galaxy or from a local directory, if we git clone the repo. In this case let's just add from the Ansible Galaxy.
+There are a couple ways to accomplish this as you'll see in the Ludus docs. We can either add directly from the Ansible Galaxy or from a local directory, if we git clone the repo. In this case let's just add from the Ansible Galaxy.
 
 ```bash
 local:~$ ludus ansible role add badsectorlabs.ludus_emux
@@ -88,7 +88,7 @@ local:~$ ludus ansible role add badsectorlabs.ludus_emux --force --verbose
 
 ```
 
-Once we've run this command, if verbose is set, this is the output we'll see. Otherwise you'll just see the last line (if no verbose). You'll see that I'm using the --force flag, this is only because i've already added the role to my environment so there is no need to do this for the inital setup.
+Once we've run this command, if verbose is set, this is the output we'll see. Otherwise you'll just see the last line (if no verbose). You'll see that I'm using the --force flag, this is only because I've already added the role to my environment so there is no need to do this for the initial setup.
 ```bash
 local:~$ ludus ansible role add badsectorlabs.ludus_emux --verbose --force
 [DEBUG] 2024/06/22 22:10:06 ludus/cmd.initConfig:root.go:104 No config file found - using defaults
@@ -141,7 +141,7 @@ BODY         :
 
 Excellent, now we have the role added. Once again, assuming we've built our templates, it's now time to create our config. We'll discuss two was to deploy this range. The first, deploying a single machine to emulate a single device. The second, deploy nine (9) machines that will each emulate a single device. Technically it will be two (2) or ten (10) machines respectively as one machine will act as the router. We're going to make a pretty straight forward config file and then set it to be used when the machines are deployed.
 
-The following will be our single device configuration file. It's important to refer to the Ludus EMUX git page or the table above to choose the number that coorasponds with the device you are trying to emulate. This number will need to be entered under **role_vars -> ludus_emux_device:** *number*. These numbers will currently range from zero-eight (0-8). In this example we'll use four (4).
+The following will be our single device configuration file. It's important to refer to the Ludus EMUX git page or the table above to choose the number that corresponds with the device you are trying to emulate. This number will need to be entered under **role_vars -> ludus_emux_device:** *number*. These numbers will currently range from zero-eight (0-8). In this example we'll use four (4).
 
 ```bash
 ludus:
@@ -161,7 +161,7 @@ ludus:
 
 Now, let's say you happen to want to spin up all the things. The following is a config that I use. Note that there are a few things here that you must change in order for this to work properly. (they are changed already in the following config, it's ready to use.) First, you'll need to choose a different **ip_last_octet:** for each. You'll end up with something like **10.5.10.4** in the example above. You'll also need to add something to the **vm_name** and the **host_name**. In my case I just add numbers that iterate up. And lastly, as mentioned, you'll need to change each of the **ludus_enux_device** numbers to iterate from zero-eight (0-8). 
 
-For simplicities sake I use the number of the device in the VM/Hostnames. If you're wondering, I just don't like starting with **.1** so I went with **.3** instead. Whatever you want will work, but best to make it easy on yourself. Ah and one last thing, you'll use your CLI editor of choice to create a file called **ludus-range-config.yml**. Within that file, paste your config. (you only need **ludus:** once, at the top. don't be like me and try and put it before every machine in the config. We live and learn...)
+For simplicity sake I use the number of the device in the VM/Hostnames. If you're wondering, I just don't like starting with **.1** so I went with **.3** instead. Whatever you want will work, but best to make it easy on yourself. Ah and one last thing, you'll use your CLI editor of choice to create a file called **ludus-range-config.yml**. Within that file, paste your config. (you only need **ludus:** once, at the top. don't be like me and try and put it before every machine in the config. We live and learn...)
 
 
 ```bash
@@ -300,7 +300,7 @@ local:~$ ludus range config set -f ludus-range-config.yml
 [INFO]  Your range config has been successfully updated.
 ```
 
-Let's build this thing! Remember, this can take a little bit of time depending on how many machines to decide to build. I find that it's best to just follow the logs as the build, because it's fun to watch it, and because you'll know when it's done. You'll enter the following to build and see the output below!
+Let's build this thing! Remember, this can take a little bit of time depending on how many machines you decide to build. I find that it's best to just follow the logs as the build, because it's fun to watch it, and because you'll know when it's done. You'll enter the following to build and see the output below!
 ```bash
 local:~$ ludus range deploy
 [INFO]  Range deploy started
@@ -324,7 +324,7 @@ One quick note, if you need to login directly to any of these boxes (not the emu
 
 ![We did it!](/dewploy.png)
 
-Now let's take a quick look and verify that everything worked. Remember, each machine will have different ports/services/etc as these are various emulated devices. In this example we'll use a device that has port 80 open and a login panel available to us for the device being emulated. A quick nmap scan shows the open ports of the emulated device (and 22 for the debian host). Navigating to port **80** on the IP of the host (10.5.10.4 in this case) we see the login page for the device! Winning! 
+Now let's take a quick look and verify that everything worked. Remember, each machine will have different ports/services/etc as these are various emulated devices. In this example we'll use a device that has port 80 open and a login panel available to us for the device being emulated. A quick nmap scan shows the open ports of the emulated device (and 22 for the Debian host). Navigating to port **80** on the IP of the host (10.5.10.4 in this case) we see the login page for the device! Winning! 
 
 ```bash
 local:~$ nmap 10.5.10.4
@@ -350,7 +350,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.11 seconds
 
 ### Conclusion
 
-Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, reploy and you're back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command 
+Not so bad, right? From this point forward you can start hacking away at these devices. Approach them methodically as you would any device/environment. If you break something, just remove, redeploy and you're back in action. That reminds me, as a quick note, there are two ways to remove/destroy the range. You can manually remove them from Proxmox, or in your Ludus host terminal, you can run the following command 
 ```bash 
 local:~$ ludus range rm
 [WARN]  
